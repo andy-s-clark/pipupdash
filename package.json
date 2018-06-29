@@ -1,0 +1,16 @@
+{
+  "name": "pipupdash",
+  "version": "0.1.0",
+  "description": "Dashboard using Raspberry PI and Puppeteer",
+  "main": "index.js",
+  "dependencies": {
+    "puppeteer": "^1.5.0",
+    "js-yaml": "^3.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "GPL-3.0"
+}
