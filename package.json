@@ -4,13 +4,13 @@
   "description": "Dashboard using Raspberry PI and Puppeteer",
   "main": "index.js",
   "dependencies": {
-    "puppeteer": "^1.5.0",
-    "js-yaml": "^3.12.0"
+    "puppeteer": "~1.12.2",
+    "js-yaml": "~3.12.2"
   },
   "devDependencies": {},
   "scripts": {
     "start": "node index.js"
   },
-  "author": "",
+  "author": "andy-s-clark",
   "license": "GPL-3.0"
 }

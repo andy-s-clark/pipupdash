@@ -1,5 +1,7 @@
-config.yaml
-example.js
+example.png
+
+.idea/
+.vscode/
 
 # vi swap file
 *.swp
