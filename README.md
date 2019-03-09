@@ -1,7 +1,8 @@
-# pipupdash
+# puppers
 
 ## Environment Variables
-* `HEADLESS` - Defaults to `false`
+
+* `HEADLESS` - Defaults to `true`
 * `SLOWMO` - Optional value in ms between characters typed into a form field
 * `VIEWPORT_WIDTH` - Defaults to 1920
 * `VIEWPORT_HEIGHT` - Defaults to 1080
@@ -15,6 +16,14 @@
     * `username`
     * `password`
 
-## Running
+## Running locally
 
         SITES='[{"url":"https://www.google.com/"},{"url":"https://slashdot.org/","wait":2000},{"url":"http://mysensuserver.mydomain:3000/","login":{"url":"http://mysensuserver.mydomain:3000/","usernameSelector":"input[name=\"username\"]","passwordSelector":"input[name=\"pass\"]","username":"adminuser","password":"adminpassword"}}]' node index.js
+
+## Build
+
+    dockerbuild -t puppers .
+
+## Run in docker
+
+    docker run -it --rm puppers

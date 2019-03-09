@@ -1,11 +1,16 @@
 {
-  "name": "pipupdash",
+  "name": "puppers",
   "version": "0.1.0",
-  "description": "Dashboard using Raspberry PI and Puppeteer",
+  "description": "Wallboard image generator using Puppeteer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andy-s-clark/puppers"
+  },
   "main": "index.js",
   "dependencies": {
-    "puppeteer": "~1.12.2",
-    "js-yaml": "~3.12.2"
+    "install": "^0.12.2",
+    "js-yaml": "~3.12.2",
+    "puppeteer": "~1.12.2"
   },
   "devDependencies": {},
   "scripts": {
