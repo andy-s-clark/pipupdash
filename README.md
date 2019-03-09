@@ -6,7 +6,7 @@
 * `SLOWMO` - Optional value in ms between characters typed into a form field
 * `VIEWPORT_WIDTH` - Defaults to 1920
 * `VIEWPORT_HEIGHT` - Defaults to 1080
-* `REPEAT` - Number of times to repeat. Defaults to 0. A value of `-2` will repeat indefinitely.
+* `REPEAT` - Defaults to `false`
 * `SITES` - Required list of sites in JSON
   * `url` - Required URL
   * `wait` - Optional value in ms to wait after the site is loaded

@@ -13,33 +13,30 @@ const getOptions = () => {
       args: [
         '--disable-setuid-sandbox',
         // '--disable-dev-shm-usage',
-        '--shm-size="1gb"',
+        // '--shm-size="1gb"',
         '--disable-gpu',
         '--no-sandbox'
       ],
       headless: 'HEADLESS' in process.env && process.env['HEADLESS'] !== 'false',
       slowMo: 'SLOWMO' in process.env ? parseInt(process.env['SLOWMO']) : 0,
+      executablePath: '/usr/bin/google-chrome'
     },
     viewport: {
       width: 'VIEWPORT_WIDTH' in process.env ? parseInt(process.env['VIEWPORT_WIDTH']) : 1920,
       height: 'VIEWPORT_HEIGHT' in process.env ? parseInt(process.env['VIEWPORT_HEIGHT']) : 1080
     },
-    repeat: 'REPEAT' in process.env ? parseInt(process.env['REPEAT']) : 0
+    repeat: 'REPEAT' in process.env && process.env['REPEAT'] === 'true'
   };
 };
 
 const doSites = async (sites, options) => {
   const browser = await puppeteer.launch(options.browser);
-  var repeatCount = options.repeat;
 
-  while (repeatCount >= 0) {
+  do {
     for (const site of sites) {
       await doSite(site, browser, options);
     }
-    if (repeatCount > -2) { // repeatCount of -2 will repeat indefinitely
-      repeatCount--;
-    }
-  }
+  } while (options.repeat);
   await browser.close();
   console.log('done');
 };
