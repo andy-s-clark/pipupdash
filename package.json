@@ -8,11 +8,12 @@
   },
   "main": "index.js",
   "dependencies": {
+    "aws-sdk": "^2.419.0",
     "puppeteer": "^1.13.0"
   },
   "devDependencies": {},
   "scripts": {
-    "debug": "SITES='[{\"url\":\"https://www.google.com/\"}]' node --inspect-brk=5858 index.js"
+    "debug": "S3_BUCKET=cs-sre-wallboard SITES='[{\"url\":\"https://www.google.com/\"}]' node --inspect-brk=5858 index.js"
   },
   "author": "andy-s-clark",
   "license": "GPL-3.0"

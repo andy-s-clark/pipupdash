@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer');
+const AWS = require('aws-sdk');
+const fs = require('fs')
 
 const getSites = () => {
   if (!('SITES' in process.env)) {
@@ -27,19 +29,19 @@ const getOptions = () => {
   };
 };
 
-const doSites = async (sites, options) => {
+const doSites = async (sites, options, s3) => {
   const browser = await puppeteer.launch(options.browser);
 
   do {
     for (const site of sites) {
-      await doSite(site, browser, options);
+      await doSite(site, browser, options, s3);
     }
   } while (options.repeat);
   await browser.close();
   console.log('done');
 };
 
-const doSite = async (site, browser, options) => {
+const doSite = async (site, browser, options, s3) => {
   const page = await browser.newPage();
   await page.setViewport(options.viewport);
   await page.goto(site['url']);
@@ -54,8 +56,33 @@ const doSite = async (site, browser, options) => {
     }
   }
   await page.waitFor('wait' in site ? parseInt(site['wait']) : 1000);
+
+  // TODO use promise rather than writing to disk and using a filestream
+  // https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagescreenshotoptions
+  // var image = page.screenshot();
   await page.screenshot({path: 'example.png'});
+  var fileStream = fs.createReadStream('example.png');
+  fileStream.on('error', function(err) {
+    console.log('File Error', err);
+  });
+  const uploadParams = { // TODO Move parameters to options
+    Bucket: 'AWS_BUCKET' in process.env ? process.env['AWS_BUCKET'] :'my-bucket',
+    Key: 'screenshot.png',
+    Body: fileStream,
+    ContentType: 'image/png',
+    ACL: 'public-read'
+  };
+  s3.upload(uploadParams, function(err, data) {
+    if (err) {
+      console.log('Error', err);
+    }
+  });
   await page.close();
 };
 
-doSites(getSites(), getOptions());
+AWS.config.update({
+  region: 'AWS_REGION' in process.env ? process.env['AWS_REGION'] : 'us-west-2'
+});
+const s3 = new AWS.S3({apiVersion: '2006-03-01'});
+
+doSites(getSites(), getOptions(), s3);
