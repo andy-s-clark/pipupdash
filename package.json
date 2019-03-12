@@ -8,9 +8,7 @@
   },
   "main": "index.js",
   "dependencies": {
-    "install": "^0.12.2",
-    "js-yaml": "~3.12.2",
-    "puppeteer": "~1.12.2"
+    "puppeteer": "^1.13.0"
   },
   "devDependencies": {},
   "scripts": {
