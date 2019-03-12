@@ -12,12 +12,10 @@ const getOptions = () => {
     browser: {
       args: [
         '--disable-setuid-sandbox',
-        // '--disable-dev-shm-usage',
-        // '--shm-size="1gb"',
         '--disable-gpu',
         '--no-sandbox'
       ],
-      headless: 'HEADLESS' in process.env && process.env['HEADLESS'] !== 'false',
+      headless: 'HEADLESS' in process.env ? process.env['HEADLESS'] !== 'true' : true,
       slowMo: 'SLOWMO' in process.env ? parseInt(process.env['SLOWMO']) : 0,
       executablePath: '/usr/bin/google-chrome'
     },

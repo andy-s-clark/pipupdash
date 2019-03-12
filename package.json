@@ -14,7 +14,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js"
+    "debug": "SITES='[{\"url\":\"https://www.google.com/\"}]' node --inspect-brk=5858 index.js"
   },
   "author": "andy-s-clark",
   "license": "GPL-3.0"
