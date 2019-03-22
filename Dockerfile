@@ -1,6 +1,8 @@
 # Need to use Chrome to get this working well
 FROM ubuntu:18.04
 
+# Install Chrome and NodeJS
+# Create a machine-id so that Chrome doesn't complain about a zero length one
 RUN apt-get update \
     && apt-get install -y -q curl gnupg \
     && curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
@@ -11,7 +13,8 @@ RUN apt-get update \
     && apt-get install -y -q nodejs google-chrome-stable \
     && apt-get clean \
     && useradd -m node \
-    && mkdir /opt/app
+    && mkdir /opt/app \
+    && echo '446F206E6F7420747261636B206D6533' > /etc/machine-id
 
 WORKDIR /opt/app
 

@@ -17,7 +17,7 @@ const getOptions = () => {
         '--disable-gpu',
         '--no-sandbox'
       ],
-      headless: 'HEADLESS' in process.env ? process.env['HEADLESS'] !== 'true' : true,
+      headless: 'HEADLESS' in process.env ? process.env['HEADLESS'] !== 'false' : true,
       slowMo: 'SLOWMO' in process.env ? parseInt(process.env['SLOWMO']) : 0,
       executablePath: '/usr/bin/google-chrome'
     },
@@ -57,22 +57,18 @@ const doSite = async (site, browser, options, s3) => {
   }
   await page.waitFor('wait' in site ? parseInt(site['wait']) : 1000);
 
-  // TODO use promise rather than writing to disk and using a filestream
-  // https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagescreenshotoptions
-  // var image = page.screenshot();
-  await page.screenshot({path: 'example.png'});
-  var fileStream = fs.createReadStream('example.png');
-  fileStream.on('error', function(err) {
-    console.log('File Error', err);
+  const screenshotBuffer = await page.screenshot({
+    encoding: 'binary',
+    type: 'png'
   });
   const uploadParams = { // TODO Move parameters to options
     Bucket: 'AWS_BUCKET' in process.env ? process.env['AWS_BUCKET'] :'my-bucket',
     Key: 'screenshot.png',
-    Body: fileStream,
+    Body: screenshotBuffer,
     ContentType: 'image/png',
     ACL: 'public-read'
   };
-  s3.upload(uploadParams, function(err, data) {
+  s3.upload(uploadParams, (err, data) => {
     if (err) {
       console.log('Error', err);
     }

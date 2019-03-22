@@ -42,7 +42,7 @@
 
 ## Running locally
 
-        AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy AWS_BUCKET=my-bucket SITES='[{"url":"https://www.google.com/"},{"url":"https://slashdot.org/","wait":2000},{"url":"http://mysensuserver.mydomain:3000/","login":{"url":"http://mysensuserver.mydomain:3000/","usernameSelector":"input[name=\"username\"]","passwordSelector":"input[name=\"pass\"]","username":"adminuser","password":"adminpassword"}}]' node index.js
+        AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy AWS_REGION=myregion AWS_BUCKET=my-bucket SITES='[{"url":"https://www.google.com/"},{"url":"https://slashdot.org/","wait":2000},{"url":"http://mysensuserver.mydomain:3000/","login":{"url":"http://mysensuserver.mydomain:3000/","usernameSelector":"input[name=\"username\"]","passwordSelector":"input[name=\"pass\"]","username":"adminuser","password":"adminpassword"}}]' node index.js
 
 ## Build
 
@@ -50,4 +50,4 @@
 
 ## Run in docker
 
-    docker run -it --rm puppers
+    docker run -it --rm -e AWS_ACCESS_KEY_ID=xxx -e AWS_SECRET_ACCESS_KEY=yyy -e AWS_REGION=myregion -e AWS_BUCKET=my-bucket -e SITES='[{"url":"https://www.google.com/"}]' puppers
